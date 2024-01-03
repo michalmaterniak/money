@@ -1,0 +1,24 @@
+{
+  "name": "commitm/money",
+  "description": "Money. Money pattern's Implementation",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michał Materniak"
+    }
+  ],
+  "require": {
+    "php": "~8.3.0",
+    "symfony/var-dumper": "v7.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Money\\": "src/",
+      "Test\\Money\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.0.*"
+  }
+}
