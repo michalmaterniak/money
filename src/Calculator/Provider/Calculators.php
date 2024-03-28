@@ -16,7 +16,7 @@ abstract class Calculators
 
     private static function init(): void
     {
-        foreach (self::$classess as $name => $class) {
+        foreach (static::$classess as $name => $class) {
             static::set(new $class, $name);
         }
     }

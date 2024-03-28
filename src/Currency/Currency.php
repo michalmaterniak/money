@@ -21,4 +21,9 @@ readonly class Currency implements CurrencyInterface, \JsonSerializable
     {
         return $this->code;
     }
+
+    public function __toString(): string
+    {
+        return $this->code;
+    }
 }

@@ -18,12 +18,12 @@ abstract class CalculatorProvider extends Calculators
             return static::$calculators[$name];
         }
 
-        return self::$calculators[self::$default];
+        return static::$calculators[static::$default];
     }
 
     public static function set(CalculatorInterface $default, string $key): void
     {
         parent::set($default, $key);
-        self::$default = $key;
+        static::$default = $key;
     }
 }
