@@ -9,9 +9,9 @@ use Money\Calculator\CalculatorInterface;
 use Money\Calculator\Provider\CalculatorProvider;
 use Money\Currency\CurrencyInterface;
 
-final readonly class Money implements \JsonSerializable
+readonly class Money implements \JsonSerializable
 {
-    public function __construct(private AmountInterface $amount, private CurrencyInterface $currency)
+    public function __construct(protected AmountInterface $amount, protected CurrencyInterface $currency)
     {}
 
     public function __clone()
