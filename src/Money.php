@@ -73,7 +73,9 @@ readonly class Money implements \JsonSerializable
             $amount = static::getCalculator()->add($amount, $money->getAmount());
         }
 
-        return new static(new Amount($amount), clone $this->currency);
+        $classAmount = get_class($this->amount);
+
+        return new static(new $classAmount($amount), clone $this->currency);
     }
 
     public function sub(Money ...$moneys): Money
@@ -88,14 +90,18 @@ readonly class Money implements \JsonSerializable
             $amount = static::getCalculator()->sub($amount, $money->getAmount());
         }
 
-        return new static(new Amount($amount), clone $this->currency);
+        $classAmount = get_class($this->amount);
+
+        return new static(new $classAmount($amount), clone $this->currency);
     }
 
     public function percent(float $percent): Money
     {
-        $amount = static::getCalculator()->percent($this->getAmount(), (string)$percent, 0);
+        $amount = static::getCalculator()->percent($this->getAmount(), (string)$percent);
 
-        return new static(new Amount($amount), clone $this->currency);
+        $classAmount = get_class($this->amount);
+
+        return new static(new $classAmount($amount), clone $this->currency);
     }
 
     public function jsonSerialize(): mixed
