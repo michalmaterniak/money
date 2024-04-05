@@ -5,5 +5,5 @@ namespace Money\Currency;
 
 interface CurrencyInterface
 {
-// to fill
+    public function getCode(): string;
 }
