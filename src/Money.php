@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Money;
 
-use Money\Amount\Amount;
 use Money\Amount\AmountInterface;
 use Money\Calculator\CalculatorInterface;
 use Money\Calculator\Provider\CalculatorProvider;
@@ -28,6 +27,11 @@ readonly class Money implements \JsonSerializable
     public function getAmount(): string
     {
         return $this->amount->getAmount();
+    }
+
+    public function getCurrencyCode(): string
+    {
+        return $this->currency->getCode();
     }
 
     public function getCurrency(): CurrencyInterface

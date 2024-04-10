@@ -130,4 +130,12 @@ trait MoneySuites
             ]
         ];
     }
+
+    public static function currencyCodes(): array
+    {
+        return [
+            [new Money(new Amount(-12), new Currency('USD')), 'USD', true],
+            [new Money(new Amount(-12), new Currency('USD')), 'EUR', false]
+        ];
+    }
 }
