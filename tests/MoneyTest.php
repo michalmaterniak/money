@@ -78,6 +78,12 @@ class MoneyTest extends TestCase
         $this->assertSame($expected, $source->equals(...$moneys));
     }
 
+    #[DataProvider('currencyCodes')]
+    public function testCurrencyCode(Money $source, string $code, bool $expected)
+    {
+        $this->assertSame($expected, $source->getCurrencyCode() === $code);
+    }
+
     public function testJsonSerialize()
     {
         $money = new Money(new Amount(12), new Currency('USD'));
