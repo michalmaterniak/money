@@ -57,7 +57,7 @@ readonly class Money implements \JsonSerializable, MoneyInterface
     public function identicalCurrencies(MoneyInterface ...$moneys): bool
     {
         foreach ($moneys as $money) {
-            if ($money->currency->getCode() !== $this->currency->getCode()) {
+            if ($money->getCurrency()->getCode() !== $this->currency->getCode()) {
                 return false;
             }
         }
