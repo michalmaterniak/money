@@ -15,7 +15,6 @@ class AmountTest extends TestCase
     public function testValidAmount(mixed $number, mixed $expected): void
     {
         try {
-
             $obj = new Amount($number);
             $this->assertSame($expected, $obj->getAmount());
         } catch (\InvalidArgumentException) {

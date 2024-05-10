@@ -8,7 +8,7 @@ use Money\Calculator\CalculatorInterface;
 use Money\Calculator\Provider\CalculatorProvider;
 use Money\Currency\CurrencyInterface;
 
-readonly class Money implements \JsonSerializable
+readonly class Money implements \JsonSerializable, MoneyInterface
 {
     public function __construct(protected AmountInterface $amount, protected CurrencyInterface $currency)
     {}
@@ -19,7 +19,7 @@ readonly class Money implements \JsonSerializable
         $this->currency = clone $this->currency;
     }
 
-    public static function getCalculator(): CalculatorInterface
+    protected static function getCalculator(): CalculatorInterface
     {
         return CalculatorProvider::get();
     }
@@ -39,7 +39,7 @@ readonly class Money implements \JsonSerializable
         return $this->currency;
     }
 
-    public function equals(Money ...$moneys): bool
+    public function equals(MoneyInterface ...$moneys): bool
     {
         if (!$this->identicalCurrencies(...$moneys)) {
             return false;
@@ -54,7 +54,7 @@ readonly class Money implements \JsonSerializable
         return true;
     }
 
-    public function identicalCurrencies(Money ...$moneys): bool
+    public function identicalCurrencies(MoneyInterface ...$moneys): bool
     {
         foreach ($moneys as $money) {
             if ($money->currency->getCode() !== $this->currency->getCode()) {
@@ -65,7 +65,7 @@ readonly class Money implements \JsonSerializable
         return true;
     }
 
-    public function add(Money ...$moneys): Money
+    public function add(MoneyInterface ...$moneys): MoneyInterface
     {
         if (!$this->identicalCurrencies(...$moneys)) {
             throw new \InvalidArgumentException('Currencies must be identical');
@@ -82,7 +82,7 @@ readonly class Money implements \JsonSerializable
         return new static(new $classAmount($amount), clone $this->currency);
     }
 
-    public function sub(Money ...$moneys): Money
+    public function sub(MoneyInterface ...$moneys): MoneyInterface
     {
         if (!$this->identicalCurrencies(...$moneys)) {
             throw new \InvalidArgumentException('Currencies must be identical');
@@ -99,7 +99,7 @@ readonly class Money implements \JsonSerializable
         return new static(new $classAmount($amount), clone $this->currency);
     }
 
-    public function percent(float $percent): Money
+    public function percent(float $percent): MoneyInterface
     {
         $amount = static::getCalculator()->percent($this->getAmount(), (string)$percent);
 
