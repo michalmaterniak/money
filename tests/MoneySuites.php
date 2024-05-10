@@ -58,6 +58,15 @@ trait MoneySuites
         ];
     }
 
+    public static function times(): array
+    {
+        return [
+            [new Money(new Amount('-100'), new Currency('USD')), 5, new Money(new Amount('-500'), new Currency('USD'))],
+            [new Money(new Amount('100'), new Currency('USD')), 2, new Money(new Amount('200'), new Currency('USD'))],
+            [new Money(new Amount('50'), new Currency('USD')), 50, new Money(new Amount('2500'), new Currency('USD'))],
+        ];
+    }
+
     public static function invalidMathMoneyDiffrentCurrencies(): array
     {
         return [

@@ -15,6 +15,11 @@ class MathCalculator implements CalculatorInterface
         return (string)((int)$a - (int)$b);
     }
 
+    public function times(string $a, int $b): string
+    {
+        return (string)((int)$a * $b);
+    }
+
     public function percent(string $a, string $b): string
     {
         return (string)(round((int)$a * (float)$b));
