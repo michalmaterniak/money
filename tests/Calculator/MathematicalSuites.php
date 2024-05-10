@@ -23,6 +23,15 @@ trait MathematicalSuites
         ];
     }
 
+    public static function times(): array
+    {
+        return [
+            ["10", 10, "100"],
+            ["0", 5, "0"],
+            ["123432", 1231321, "151984413672"]
+        ];
+    }
+
     public static function multiplicationRoundWithPrecision(): array
     {
         return [

@@ -99,6 +99,14 @@ readonly class Money implements \JsonSerializable, MoneyInterface
         return new static(new $classAmount($amount), clone $this->currency);
     }
 
+    public function times(int $times): MoneyInterface
+    {
+        $classAmount = get_class($this->amount);
+        $amount = static::getCalculator()->times($this->getAmount(), $times);
+
+        return new static(new $classAmount($amount), clone $this->currency);
+    }
+
     public function percent(float $percent): MoneyInterface
     {
         $amount = static::getCalculator()->percent($this->getAmount(), (string)$percent);

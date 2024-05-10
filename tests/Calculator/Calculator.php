@@ -36,4 +36,12 @@ abstract class Calculator extends TestCase
 
         $this->assertSame($expected, $product);
     }
+
+    #[DataProvider("times")]
+    public function testTimes(string $value, int $times, string $expected): void
+    {
+        $result = $this->calculator->times($value, $times);
+
+        $this->assertSame($expected, $result);
+    }
 }

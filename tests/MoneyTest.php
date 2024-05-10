@@ -45,6 +45,15 @@ class MoneyTest extends TestCase
         $this->assertSame($obj->getAmount(), $expected['add']);
     }
 
+    #[DataProvider('times')]
+    public function testTimes(Money $money, int $times, Money $expected): void
+    {
+        $result = $money->times($times);
+
+        $this->assertSame($result->getAmount(), $expected->getAmount());
+        $this->assertSame($result->getCurrencyCode(), $expected->getCurrencyCode());
+    }
+
     /**
      * @param array|Money[] $moneys
      * @param array $expected

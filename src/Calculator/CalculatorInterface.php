@@ -9,5 +9,7 @@ interface CalculatorInterface
 
     public function sub(string $a, string $b): string;
 
+    public function times(string $a, int $b): string;
+
     public function percent(string $a, string $b): string;
 }

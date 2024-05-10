@@ -20,5 +20,7 @@ interface MoneyInterface
 
     public function sub(MoneyInterface ...$moneys): MoneyInterface;
 
+    public function times(int $times): MoneyInterface;
+
     public function percent(float $percent): MoneyInterface;
 }
