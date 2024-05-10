@@ -8,7 +8,7 @@ use Money\Calculator\CalculatorInterface;
 use Money\Calculator\Provider\CalculatorProvider;
 use Money\Currency\CurrencyInterface;
 
-class Money implements \JsonSerializable, MoneyInterface
+readonly class Money implements \JsonSerializable, MoneyInterface
 {
     public function __construct(protected AmountInterface $amount, protected CurrencyInterface $currency)
     {}
