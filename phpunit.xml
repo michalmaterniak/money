@@ -12,6 +12,7 @@
   displayDetailsOnTestsThatTriggerErrors="true"
   displayDetailsOnTestsThatTriggerNotices="true"
   displayDetailsOnTestsThatTriggerWarnings="true"
+  stopOnError="true"
 >
 
   <testsuites>

@@ -71,15 +71,13 @@ readonly class Money implements \JsonSerializable, MoneyInterface
             throw new \InvalidArgumentException('Currencies must be identical');
         }
 
-        $amount = $this->getAmount();
+        $amounts = [];
 
         foreach ($moneys as $money) {
-            $amount = static::getCalculator()->add($amount, $money->getAmount());
+            $amounts[] = $money->amount;
         }
 
-        $classAmount = get_class($this->amount);
-
-        return new static(new $classAmount($amount), clone $this->currency);
+        return new static($this->amount->add(...$amounts), clone $this->currency);
     }
 
     public function sub(MoneyInterface ...$moneys): MoneyInterface
@@ -88,32 +86,23 @@ readonly class Money implements \JsonSerializable, MoneyInterface
             throw new \InvalidArgumentException('Currencies must be identical');
         }
 
-        $amount = $this->getAmount();
+        $amounts = [];
 
         foreach ($moneys as $money) {
-            $amount = static::getCalculator()->sub($amount, $money->getAmount());
+            $amounts[] = $money->amount;
         }
 
-        $classAmount = get_class($this->amount);
-
-        return new static(new $classAmount($amount), clone $this->currency);
+        return new static($this->amount->sub(...$amounts), clone $this->currency);
     }
 
     public function times(int $times): MoneyInterface
     {
-        $classAmount = get_class($this->amount);
-        $amount = static::getCalculator()->times($this->getAmount(), $times);
-
-        return new static(new $classAmount($amount), clone $this->currency);
+        return new static($this->amount->times($times), clone $this->currency);
     }
 
     public function percent(float $percent): MoneyInterface
     {
-        $amount = static::getCalculator()->percent($this->getAmount(), (string)$percent);
-
-        $classAmount = get_class($this->amount);
-
-        return new static(new $classAmount($amount), clone $this->currency);
+        return new static($this->amount->percent($percent), clone $this->currency);
     }
 
     public function jsonSerialize(): mixed
