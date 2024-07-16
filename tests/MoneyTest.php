@@ -22,27 +22,27 @@ class MoneyTest extends TestCase
     }
 
     /**
-     * @param array|Money[] $money
+     * @param array|Money[] $moneys
      * @param array $expected
      * @return void
      */
     #[DataProvider('validMathMoney')]
-    public function testAdd(array $money, array $expected): void
+    public function testAdd(array $moneys, array $expected): void
     {
-        $obj = $this->money->add(...$money);
+        $obj = $this->money->add(...$moneys);
         $this->assertSame($obj->getAmount(), $expected['add']);
     }
 
     /**
-     * @param array|Money[] $money
+     * @param array|Money[] $moneys
      * @param array $expected
      * @return void
      */
     #[DataProvider('validMathMoney')]
-    public function testSub(array $money, array $expected): void
+    public function testSub(array $moneys, array $expected): void
     {
-        $obj = $this->money->add(...$money);
-        $this->assertSame($obj->getAmount(), $expected['add']);
+        $obj = $this->money->sub(...$moneys);
+        $this->assertSame($obj->getAmount(), $expected['sub']);
     }
 
     #[DataProvider('times')]
