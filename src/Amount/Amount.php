@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace Money\Amount;
 
@@ -10,15 +11,13 @@ readonly class Amount implements AmountInterface
 {
     protected string $amount;
 
-    public function __construct(int|float|string $amount)
+    public function __construct(int|string $amount)
     {
-        $amount = (string)$amount;
-
-        if (!preg_match("/^-?[1-9]\d*$|^0$/m", $amount)) {
-            throw new \InvalidArgumentException('Amount must be a number.');
+        if (is_string($amount) && !preg_match("/^-?[1-9]\d*$|^0$/m", $amount)) {
+            throw new \InvalidArgumentException('Amount must be a integer number.');
         }
 
-        $this->amount = $amount;
+        $this->amount = (string) $amount;
     }
 
     protected static function getCalculator(): CalculatorInterface
@@ -30,7 +29,6 @@ readonly class Amount implements AmountInterface
     {
         return $this->amount;
     }
-
 
     public function add(AmountInterface ...$amounts): AmountInterface
     {
@@ -61,7 +59,7 @@ readonly class Amount implements AmountInterface
 
     public function percent(float $percent): AmountInterface
     {
-        $amount = static::getCalculator()->percent($this->getAmount(), (string)$percent);
+        $amount = static::getCalculator()->percent($this->getAmount(), (string) $percent);
 
         return new static($amount);
     }

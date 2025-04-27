@@ -9,19 +9,28 @@
     }
   ],
   "require": {
-    "php": "^8.3"
+    "php": "^8.2"
   },
   "autoload": {
     "psr-4": {
-      "Money\\": "src/",
+      "Money\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "Test\\Money\\": "tests/"
     }
   },
   "require-dev": {
     "phpunit/phpunit": "11.0.*",
-    "symfony/var-dumper": "v7.0.*"
+    "symfony/var-dumper": "v7.0.*",
+    "friendsofphp/php-cs-fixer": "^3.66",
+    "symfony/finder": "^7.2",
+    "squizlabs/php_codesniffer": "*"
   },
   "scripts": {
-    "test": "./vendor/bin/phpunit"
+    "tests": "./vendor/bin/phpunit",
+    "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer --allow-risky=yes fix ./",
+    "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer --allow-risky=yes check ./"
   }
 }

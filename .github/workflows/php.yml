@@ -8,6 +8,20 @@ permissions:
   contents: read
 
 jobs:
+  test-php82:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+      - name: Install dependencies
+        run: composer update
+      - name: Run test suite
+        run: composer run-script tests
+
   test-php83:
     runs-on: ubuntu-latest
     steps:
@@ -20,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: composer update
       - name: Run test suite
-        run: composer run-script test
+        run: composer run-script tests
 
   test-php84:
     runs-on: ubuntu-latest
@@ -34,5 +48,17 @@ jobs:
       - name: Install dependencies
         run: composer update
       - name: Run test suite
-        run: composer run-script test
+        run: composer run-script tests
+
+  test-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+      - name: Install dependencies
+        run: composer update
+      - name: Run static analysis
+        run: composer run-script cs-check
 

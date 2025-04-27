@@ -1,21 +1,42 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace Money;
 
+use Money\Amount\Amount;
 use Money\Amount\AmountInterface;
 use Money\Calculator\CalculatorInterface;
 use Money\Calculator\Provider\CalculatorProvider;
+use Money\Currency\Currency;
 use Money\Currency\CurrencyInterface;
 
 readonly class Money implements \JsonSerializable, MoneyInterface
 {
-    public function __construct(protected AmountInterface $amount, protected CurrencyInterface $currency)
-    {}
+    public AmountInterface $amount;
+    public CurrencyInterface $currency;
+
+    public function __construct(int|string|AmountInterface $amount, string|CurrencyInterface $currency)
+    {
+        if (is_string($amount) && false === ctype_digit($amount)) {
+            throw new \InvalidArgumentException('Amount must be an integer');
+        }
+
+        if (false === $currency instanceof CurrencyInterface) {
+            $currency = new Currency($currency);
+        }
+
+        if (false === $amount instanceof AmountInterface) {
+            $amount = new Amount($amount);
+        }
+
+        $this->amount   = $amount;
+        $this->currency = $currency;
+    }
 
     public function __clone()
     {
-        $this->amount = clone $this->amount;
+        $this->amount   = clone $this->amount;
         $this->currency = clone $this->currency;
     }
 
@@ -27,6 +48,21 @@ readonly class Money implements \JsonSerializable, MoneyInterface
     public function getAmount(): string
     {
         return $this->amount->getAmount();
+    }
+
+    public function getMajorUnitAmount(string $decimalSeparator = '.', string $thousandsSeparator = ''): string
+    {
+        $round = floatval(
+            CalculatorProvider::get()->round(
+                CalculatorProvider::get()->divide(
+                    $this->amount->getAmount(),
+                    intval(pow(10, $this->currency->getMajorUnit())),
+                ),
+                $this->currency->getMajorUnit(),
+            ),
+        );
+
+        return number_format($round, $this->currency->getMajorUnit(), $decimalSeparator, $thousandsSeparator);
     }
 
     public function getCurrencyCode(): string
@@ -105,11 +141,11 @@ readonly class Money implements \JsonSerializable, MoneyInterface
         return new static($this->amount->percent($percent), clone $this->currency);
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
-            'amount' => $this->amount->getAmount(),
-            'currency' => $this->currency->getCode()
+            'amount'   => $this->getAmount(),
+            'currency' => $this->currency->getCode(),
         ];
     }
 }
