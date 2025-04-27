@@ -1,29 +1,42 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace Money\Currency;
 
 readonly class Currency implements CurrencyInterface, \JsonSerializable
 {
-    protected string $code;
+    private CurrencyInfo $currencyInfo;
 
     public function __construct(string $code)
     {
-        $this->code = strtoupper($code);
+        $code         = strtoupper($code);
+        $currencyInfo = CurrencyInfoFactory::create($code);
+
+        if (null === $currencyInfo) {
+            throw new \InvalidArgumentException("Currency `$code` does not exist.");
+        }
+
+        $this->currencyInfo = $currencyInfo;
     }
 
     public function getCode(): string
     {
-        return $this->code;
+        return $this->currencyInfo->getCode();
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): string
     {
-        return $this->code;
+        return $this->getCode();
     }
 
     public function __toString(): string
     {
-        return $this->code;
+        return $this->getCode();
+    }
+
+    public function getMajorUnit(): int
+    {
+        return $this->currencyInfo->getMajorUnit();
     }
 }

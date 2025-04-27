@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Test\Money\Currency;
 
 use Money\Currency\Currency;
@@ -8,18 +10,32 @@ use PHPUnit\Framework\TestCase;
 
 class CurrencyTest extends TestCase
 {
-    use CurrencySuites;
-
-    #[DataProvider('currencyCodes')]
-    public function testCodes(Currency $currency, string $code, bool $expected): void
+    public static function validCurrencyCodes(): array
     {
-        $this->assertSame($expected, $currency->getCode() === $code);
+        return [
+            ['USD'],
+            ['PLN'],
+        ];
     }
 
-
-    #[DataProvider('currencyCodes')]
-    public function testJsonSerializer(Currency $currency, string $code, bool $expected): void
+    #[DataProvider('validCurrencyCodes')]
+    public function testShouldCreateCurrencyObjectSuccessfully(string $code): void
     {
-        $this->assertSame($expected, $currency->jsonSerialize() === $code);
+        $currency = new Currency($code);
+        $this->assertInstanceOf(Currency::class, $currency);
+    }
+
+    public static function invalidCurrencyCodes(): array
+    {
+        return [
+            ['UNKNOW_CODE'],
+        ];
+    }
+
+    #[DataProvider('invalidCurrencyCodes')]
+    public function testShouldThrowExceptionWhenCreatingCurrencyWithInvalidCode(string $code): void
+    {
+        $this->expectExceptionObject(new \InvalidArgumentException("Currency `$code` does not exist."));
+        new Currency($code);
     }
 }

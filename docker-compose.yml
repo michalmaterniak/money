@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  php82:
+    build:
+      context: ./.docker/php82
+    container_name: php82
+    volumes:
+      - ./:/app:cached
+    working_dir: /app
+  php83:
+    build:
+      context: ./.docker/php83
+    container_name: php83
+    volumes:
+      - ./:/app:cached
+    working_dir: /app
+  php84:
+    build:
+      context: ./.docker/php84
+    container_name: php84
+    volumes:
+      - ./:/app:cached
+    working_dir: /app

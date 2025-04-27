@@ -1,23 +1,24 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace Money\Calculator\Provider;
 
-use Money\Calculator\MathCalculator;
 use Money\Calculator\CalculatorInterface;
+use Money\Calculator\MathCalculator;
 
 /**
  * @internal
  */
 abstract class Calculators
 {
-    private static array $classess = ['math' => MathCalculator::class];
+    private static array $classess      = ['math' => MathCalculator::class];
     protected static array $calculators = [];
 
     private static function init(): void
     {
         foreach (static::$classess as $name => $class) {
-            static::set(new $class, $name);
+            static::set(new $class(), $name);
         }
     }
 

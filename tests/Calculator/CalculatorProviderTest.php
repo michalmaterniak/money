@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace Test\Money\Calculator;
 
@@ -22,9 +23,10 @@ class CalculatorProviderTest extends TestCase
 
         $this->assertTrue($default instanceof CalculatorInterface);
     }
+
     public function testNewCalculator(): void
     {
-        $name = 'new_calc';
+        $name       = 'new_calc';
         $calculator = new CustomCalculator();
 
         CalculatorProvider::set($calculator, $name);
