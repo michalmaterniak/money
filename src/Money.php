@@ -11,10 +11,10 @@ use Money\Calculator\Provider\CalculatorProvider;
 use Money\Currency\Currency;
 use Money\Currency\CurrencyInterface;
 
-readonly class Money implements \JsonSerializable, MoneyInterface
+class Money implements \JsonSerializable, MoneyInterface
 {
-    public AmountInterface $amount;
-    public CurrencyInterface $currency;
+    public readonly AmountInterface $amount;
+    public readonly CurrencyInterface $currency;
 
     public function __construct(int|string|AmountInterface $amount, string|CurrencyInterface $currency)
     {

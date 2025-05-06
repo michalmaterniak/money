@@ -7,9 +7,9 @@ namespace Money\Amount;
 use Money\Calculator\CalculatorInterface;
 use Money\Calculator\Provider\CalculatorProvider;
 
-readonly class Amount implements AmountInterface
+class Amount implements AmountInterface
 {
-    protected string $amount;
+    protected readonly string $amount;
 
     public function __construct(int|string $amount)
     {

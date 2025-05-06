@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Money\Currency;
 
-readonly class Currency implements CurrencyInterface, \JsonSerializable
+class Currency implements CurrencyInterface, \JsonSerializable
 {
-    private CurrencyInfo $currencyInfo;
+    private readonly CurrencyInfo $currencyInfo;
 
     public function __construct(string $code)
     {
